@@ -1,17 +1,10 @@
 package com.conv.member.domain;
 
 public class Member {
-int member_no;
-String id;
-String pass;
-String passhint;
-String email;
-public int getMember_no() {
-	return member_no;
-}
-public void setMember_no(int member_no) {
-	this.member_no = member_no;
-}
+private String id;
+private String pass;
+private String passhint;
+private String email;
 public String getId() {
 	return id;
 }
@@ -36,5 +29,5 @@ public String getEmail() {
 public void setEmail(String email) {
 	this.email = email;
 }
-}
 
+}
