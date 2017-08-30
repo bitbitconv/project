@@ -20,7 +20,11 @@ public class MemberLoginController extends HttpServlet{
 		String pass = request.getParameter("pass");
 		member.setId(id);
 		member.setPass(pass);
-		LogIn.login(id, pass);
+		boolean b = LogIn.login(id, pass);
+		if(b) {	response.sendRedirect("/conv/jsp/main/main.jsp");
+		}else {	response.sendRedirect("/conv/jsp/member/login.jsp");
+		}
+		
 	}
 //membercontroller
 	

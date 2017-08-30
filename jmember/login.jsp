@@ -16,7 +16,7 @@
 	<input type="text" name="id">
 	  <br>
 	 비밀번호&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="text" name="pass"><br>
+	<input type="password" name="pass"><br>
 	<br>
 	<button type="submit">로그인</button>
 	

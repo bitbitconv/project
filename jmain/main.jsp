@@ -15,7 +15,7 @@
 <form method="post" action="/conv/jsp/member/login.jsp">
 <a href="/conv/jsp/member/login.jsp">로그인</a>
 <a href="/conv/jsp/member/signin.jsp">회원가입</a>
-검색(구현안됨)<input type="text">
+검색(구현안됨)<input type="text"><button type="button" value="검색">검색</button>
 	<table>
 		<tr>
 			<th>
