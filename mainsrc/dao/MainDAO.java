@@ -31,11 +31,11 @@ public class MainDAO {
 		s.service();
 	}
 
-	public void mainRecipe() {
+	public String mainRecipe() {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
-
+		String result = "";
 		try {
 			con = ConnectionPool.getConnection();
 
@@ -55,31 +55,25 @@ public class MainDAO {
 
 			}
 			for (Recipe recipe : list) {
-				System.out.println(recipe.getPhoto());
+				result += recipe.getPhoto()+"\t";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.releaseConnection(con);
 		}
+		return result;
 	}
 
-	public void mainReview() {
+	public String mainReview() {
 		Connection con = null;
 		PreparedStatement stmt = null;
-
+		String result = "";
+		
 		try {
 			con = ConnectionPool.getConnection();
 
 			StringBuffer sql = new StringBuffer();
-			// sql.append("select rownum, photo from (select * from t97_recipe order by no
-			// desc) ");
-			// sql.append("where rownum<=2 ");
-			//
-			// stmt = con.prepareStatement(sql.toString());
-			// ResultSet rs = stmt.executeQuery();
-			//
-			// sql=null;
 
 			sql.append("select rownum, title, writer from (select * from t97_review order by no desc) ");
 			sql.append("where rownum<=2  ");
@@ -88,35 +82,29 @@ public class MainDAO {
 			ResultSet rs = stmt.executeQuery();
 
 			List<Review> list = new ArrayList<>();
-			// List<Recipe> list = new ArrayList<>();
 			while (rs.next()) {
 
 				Review r = new Review();
 				r.setTitle(rs.getString("title"));
 				r.setWriter(rs.getString("writer"));
 				list.add(r);
-				// Recipe r = new Recipe();
-				// r.setPhoto(rs.getString("photo"));
-				// list.add(r);
 
 			}
-			// for(Recipe recipe : list) {
-			// System.out.println(recipe.getPhoto());
-			// }
 			for (Review review : list) {
-				System.out.println(review.getTitle());
-				System.out.println(review.getWriter());
+				result +=review.getTitle()+"\t"+review.getWriter()+"\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.releaseConnection(con);
 		}
+		return result;
 	}
 	
-	public void mainFree(){
+	public String mainFree(){
 		Connection con = null;
 		PreparedStatement stmt = null;
+		String result = "";
 
 		try {
 			con = ConnectionPool.getConnection();
@@ -140,22 +128,23 @@ public class MainDAO {
 
 			}
 			for (Free free : list) {
-				System.out.println(free.getState());
-				System.out.println(free.getTitle());
-				System.out.println(free.getWriter());
+				
+				result += free.getState()+"\t"+free.getTitle()+"\t"+free.getWriter()+"\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.releaseConnection(con);
 		}
+		return result;
 	}
 	
 	
-	public void mainPB() {
+	public String mainPB() {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
+		String result = "";
 
 		try {
 			con = ConnectionPool.getConnection();
@@ -176,19 +165,21 @@ public class MainDAO {
 
 			}
 			for (PB pb : list) {
-				System.out.println(pb.getImageURL());
+				result += pb.getImageURL()+"\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.releaseConnection(con);
 		}
+		return result;
 	}
 	
-	public void mainSale() {
+	public String mainSale() {
 		
 		Connection con = null;
 		PreparedStatement stmt = null;
+		String result = "";
 		
 		try {
 			con = ConnectionPool.getConnection();
@@ -209,19 +200,21 @@ public class MainDAO {
 				
 			}
 			for (Sale sale : list) {
-				System.out.println(sale.getImageURL());
+				result += sale.getImageURL()+"\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.releaseConnection(con);
 		}
+		return result;
 	}
 
-	public void mainWorld() {
+	public String mainWorld() {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
+		String result = "";
 
 		try {
 			con = ConnectionPool.getConnection();
@@ -242,30 +235,16 @@ public class MainDAO {
 
 			}
 			for (World world : list) {
-				System.out.println(world.getPhoto());
+				result += world.getPhoto()+"\n";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.releaseConnection(con);
 		}
+		return result;
 	}
 	
-
-	// public List<Object> mainList(String sql){
-	// stmt = con.prepareStatement(sql.toString());
-	//
-	// ResultSet rs = stmt.executeQuery();
-	// List<Object> list = new ArrayList<>();
-	// while (rs.next()) {
-	//
-	// Recipe r = new Recipe();
-	// r.setPhoto(rs.getString("photo"));
-	// list.add(r);
-	//
-	// }
-	// return list;
-	// }
 
 	public void search() {
 		
