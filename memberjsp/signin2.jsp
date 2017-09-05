@@ -82,7 +82,7 @@
         <b><font size="6" color="gray">회원가입</font></b>
         <br><br><br>
         <form method="post" name= "userInfo" action="/conv/jsp/member/signin2" >
-            <table>
+            <table class="w3-center">
                 <tr>
                     <td id="title">아이디</td>
                     <td>

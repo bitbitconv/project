@@ -32,7 +32,7 @@ public class MainDAO {
 
 			StringBuffer sql = new StringBuffer();
 			sql.append("select rownum, photo from (select * from t97_recipe order by no desc) ");
-			sql.append("where rownum<=2  ");
+			sql.append("where rownum<=4  ");
 
 			stmt = con.prepareStatement(sql.toString());
 
@@ -46,7 +46,7 @@ public class MainDAO {
 
 			}
 			for (Recipe recipe : list) {
-				result += recipe.getPhoto()+"<br>";
+				result += "<img src='http://localhost:8000/conv/upload"+recipe.getPhoto()+"'/>";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

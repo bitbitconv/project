@@ -91,11 +91,11 @@
   
 </header>
 	<form method="post" action="/conv/member/login" method="post">
-	<div align="center" class="w3-third">
+	<div align="center" class="w3-display-middle">
 
         
         <form method="post" name= "userInfo" action="/conv/jsp/member/signin" >
-            <table>
+            <table class="w3-center">
                 <tr>
                     <td id="title">아이디</td>
                     <td>

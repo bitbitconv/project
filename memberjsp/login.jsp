@@ -20,7 +20,7 @@
   
 </header>
 	<form method="post" action="/conv/member/login" method="post">
-	<div align="center" class="w3-third">
+	<div align="center"  class="w3-center">
 	<br>
 	<p>${error}</p>
 	<p>${logined}</p>

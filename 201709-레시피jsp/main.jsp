@@ -1,18 +1,5 @@
-<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="com.conv.review.domain.Review"%>
-<%@page import="com.conv.main.dao.MainDAO"%>
-<%@page import="com.conv.util.ConnectionPool"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="com.conv.recipe.domain.Recipe"%>
-<%@page import="java.util.List"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	MainDAO dao = new MainDAO();
-	pageContext.setAttribute("dao", dao);
-%>
 <!DOCTYPE html>
 <html>
 <title>bitbit콘비니</title>
@@ -40,40 +27,10 @@
 <!-- Header -->
 <header class="w3-container w3-theme w3-padding" id="myHeader">
   <i onclick="w3_open()" class="fa fa-bars w3-xlarge w3-button w3-theme"></i> 
-				<span style="float:left">
-				 <input type="text"	name="keyword" >
-				<a class="w3-button w3-theme" href="/conv/review/list">
-				검색</a>
-				</span>
-  		<c:choose>
-			<c:when test="${empty user}">
-				<span style="float:right">
-				${welcome}
-				<a class="w3-button w3-theme" href="/conv/jsp/member/login.jsp">로그인</a>
-				</span>
-					<c:if test="${empty welcome}">
-					<span style="float:right">
-					<a class="w3-button w3-theme" href="/conv/jsp/member/signin.jsp">회원가입</a>
-					</span>
-					</c:if>
-			</c:when> 
-			<c:otherwise>
-				<span style="float:right">
-				<a class="w3-button w3-theme" href="/conv/member/logout">
-				로그아웃</a>
-				</span>
-				<span style="float:right">
-				${user}님 환영합니다!
-				</span>
-				<%--
-				접속시간 : ${user.accessTime}
-				 --%>
-			</c:otherwise>
-		</c:choose>
   
   <div class="w3-center">
   <h4>펴니점 꿀정보 사이트</h4>
-  <h1 class="w3-xxxlarge w3-animate-bottom"><a href="/conv/jsp/main/main.jsp">펴니펴니펴니점</a></h1>
+  <h1 class="w3-xxxlarge w3-animate-bottom"><a href="main.jsp">펴니펴니펴니점</a></h1>
     <div class="w3-padding-32">
       <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" onclick="document.getElementById('id01').style.display='block'" style="font-weight:900;">밥 뭐먹지</button>
     </div>
@@ -104,11 +61,14 @@
 <div class="w3-third">
   <div class="w3-card-2 w3-container" style="min-height:460px">
   <h3>혼밥 레시피!</h3><br>
-  <p class="w3-half">좌상</p>
-  <p class="w3-half">우상</p>
-  ${dao.mainRecipe() }
-  <p class="w3-half">좌하</p>
-  <p class="w3-half">우하</p>
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <p class="w3-half">태양의 마테차</p>
+  <p class="w3-half">마테차를 마셔요</p>
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <p class="w3-half">마테마테차차</p>
+  <p class="w3-half">꿀꺽꿀꺽</p>
   </div>
 </div>
 
@@ -120,7 +80,6 @@
   <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
   <p class="w3-half">태양의 마테차</p>
   <p class="w3-half">마테차를 마셔요</p>
-  ${dao.mainWorld() }
   <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
   <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
   <p class="w3-half">마테마테차차</p>
@@ -132,55 +91,31 @@
 <div class="w3-third">
   <div class="w3-card-2 w3-container" style="min-height:460px">
   <h3>PB 상품</h3><br>
-   ${dao.mainPB()}
-   //pb pb new pb 해서 list[0]~[4] 꺼내오는 방식으로 해야될듯
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <p class="w3-half">태양의 마테차</p>
+  <p class="w3-half">마테차를 마셔요</p>
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <p class="w3-half">마테마테차차</p>
+  <p class="w3-half">꿀꺽꿀꺽</p>
   </div>
 </div>
 
 
 <div class="w3-third">
   <div class="w3-card-2 w3-container" style="min-height:460px">
-  <h3><a href="/conv/review/list">리뷰 게시판</a></h3><br>
-  
-  <div class="w3-responsive w3-card-4">
-<table class="w3-table w3-striped w3-bordered">
-<thead>
-<tr class="w3-theme">
-  <th>번호</th>
-  <th>제목</th>
-  <th>작성자</th>
-  <th>조회수</th>
-  <th>등록일</th>
-</tr>
-</thead>
-<tbody>
-<%
-	List<Review> list = dao.mainReview();
-	for(Review review : list){
-		int no = review.getNo();
-		String title = review.getTitle();
-		String writer = review.getWriter();
-		int hit = review.getHit();
-		Date regDate = review.getRegDate();
-		%>
-		
-		<tr class="w3-white">
-		  <td><button name="no" value="<%= no %>"><%= no %></button></td>
-		  <td><%= title %></td>
-		  <td><%= writer %></td>
-		  <td><%= hit %></td>
-		  <td><%= regDate %></td>
-		</tr>
-<%
-	}
-%>
-</tbody>
-</table>
-</div>
+  <h3>리뷰 게시판</h3><br>
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <p class="w3-half">태양의 마테차</p>
+  <p class="w3-half">마테차를 마셔요</p>
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <p class="w3-half">마테마테차차</p>
+  <p class="w3-half">꿀꺽꿀꺽</p>
   </div>
 </div>
-
-
 
 
 <div class="w3-third">
@@ -190,7 +125,6 @@
   <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
   <p class="w3-half">태양의 마테차</p>
   <p class="w3-half">마테차를 마셔요</p>
-  ${dao.mainFree() }
   <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
   <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
   <p class="w3-half">마테마테차차</p>
@@ -202,11 +136,12 @@
 <div class="w3-third">
   <div class="w3-card-2 w3-container" style="min-height:460px">
   <h3>이달의 행사</h3><br>
-
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
   <p class="w3-half">태양의 마테차</p>
   <p class="w3-half">마테차를 마셔요</p>
-  ${dao.mainPB()}
-
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
+  <img src="http://res.heraldm.com/content/image/2015/05/26/20150526000389_0.jpg" class="w3-half" />
   <p class="w3-half">마테마테차차</p>
   <p class="w3-half">꿀꺽꿀꺽</p>
   </div>
