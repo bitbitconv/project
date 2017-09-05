@@ -5,6 +5,13 @@ private String id;
 private String pass;
 private String passhint;
 private String email;
+//private String accessTime;
+//public String getAccessTime() {
+//	return accessTime;
+//}
+//public void setAccessTime(String accessTime) {
+//	this.accessTime = accessTime;
+//}
 public String getId() {
 	return id;
 }

@@ -7,10 +7,25 @@
 <html>
 <head>
     <title>회원가입 화면</title>
- 
- 
+ <style type="text/css">
+        table{
+            margin-left:auto; 
+            margin-right:auto;
+            border:3px solid skyblue;
+        }
+        
+        td{
+            border:1px solid skyblue
+        }
+        
+        #title{
+            background-color:skyblue
+        }
+   </style>
+
     <script type="text/javascript">
     
+            <%--
         // 다 입력 했는지 확인하기
         function checkValue()
         {
@@ -20,12 +35,10 @@
                 alert("아이디를 입력하세요.");
                 return false;
             }
-            <%--
             if(form.idDuplication.value != "idCheck"){
                 alert("아이디 중복체크를 해주세요.");
                 return false;
             }
-            --%>
             if(!form.password.value){
                 alert("비밀번호를 입력하세요.");
                 return false;
@@ -45,6 +58,16 @@
                 return false;
             }
         }
+        //중복체크
+        function openDubCheck(){
+        	window.name = "parentForm";
+        	window.open("/conv/jsp/member/iddubcheck.jsp", "idCheck", "width=500, height=300, scrollbars=no")
+        	
+        }
+        
+        }
+        
+            --%>
         
         // 취소 버튼 클릭시 메인으로 이동
         function goFirstForm() {
@@ -58,17 +81,17 @@
         <br><br>
         <b><font size="6" color="gray">회원가입</font></b>
         <br><br><br>
-        
-        <form method="post" action="/conv/jsp/member/signin">
+        <form method="post" name= "userInfo" action="/conv/jsp/member/signin2" >
             <table>
                 <tr>
                     <td id="title">아이디</td>
                     <td>
-                        <input type="text" name="id" maxlength="50">
+                        <input disabled="disabled" type="text" name="id" maxlength="50" value="${userId}">${idDup}
                         <%--
-                        <input type="button" value="중복확인" onclick="   ">    
+                        <input type="button" value="중복확인" onclick="openDubCheck()">    
                         <input type="hidden" name="idDuplication" value="idUncheck" >
                          --%>
+                         
                     </td>
                 </tr>
                         
@@ -109,8 +132,8 @@
                 </tr>
             </table>
             <br>
-            <input type="submit" value="가입"/>  
-            <input type="button" value="취소" onclick="goFirstForm()">
+            <input type="submit" value="가입" />  
+            <input type="button" value="취소" onclick="goFirstForm()" />
         </form>
 </body>
 </html>

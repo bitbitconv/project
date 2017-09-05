@@ -5,10 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Random;
 
 import com.conv.free.domain.Free;
-import com.conv.member.dao.MemberUI;
 import com.conv.pb.domain.PB;
 import com.conv.recipe.domain.Recipe;
 import com.conv.review.domain.Review;
@@ -22,14 +21,6 @@ public class MainDAO {
 	// pb와 sale은 아직 DB가 없어 오류납니다.
 	// 그냥 바로 실행하시면 게시판별 게시물 데이터들이 정해진 갯수만큼 차례로 출력됩니다.
 	
-	public static void main(String[] args) {
-	// 로그인테스트를 하려면 아래 주석을 풀고 실행하세요.
-//		MemberUI ui = new MemberUI();
-//		ui.selectMenu();
-
-		Service s = new Service();
-		s.service();
-	}
 
 	public String mainRecipe() {
 
@@ -55,7 +46,7 @@ public class MainDAO {
 
 			}
 			for (Recipe recipe : list) {
-				result += recipe.getPhoto()+"\t";
+				result += recipe.getPhoto()+"<br>";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,40 +56,43 @@ public class MainDAO {
 		return result;
 	}
 
-	public String mainReview() {
+	public List<Review> mainReview() {
 		Connection con = null;
 		PreparedStatement stmt = null;
-		String result = "";
+//		String result = "";
+		List<Review> list = new ArrayList<>();
 		
 		try {
 			con = ConnectionPool.getConnection();
 
 			StringBuffer sql = new StringBuffer();
 
-			sql.append("select rownum, title, writer from (select * from t97_review order by no desc) ");
-			sql.append("where rownum<=2  ");
+			sql.append("select rownum, no, title, writer, hit, reg_date from (select * from t97_review order by no desc) ");
+			sql.append("where rownum<=4  ");
 
 			stmt = con.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery();
 
-			List<Review> list = new ArrayList<>();
 			while (rs.next()) {
 
 				Review r = new Review();
+				r.setNo(rs.getInt("no"));
 				r.setTitle(rs.getString("title"));
 				r.setWriter(rs.getString("writer"));
+				r.setHit(rs.getInt("hit"));
+				r.setRegDate(rs.getDate("reg_date"));
 				list.add(r);
 
 			}
-			for (Review review : list) {
-				result +=review.getTitle()+"\t"+review.getWriter()+"\n";
-			}
+//			for (Review review : list) {
+//				result +=review.getTitle()+"\t"+review.getWriter()+"<br>";
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.releaseConnection(con);
 		}
-		return result;
+		return list;
 	}
 	
 	public String mainFree(){
@@ -129,7 +123,7 @@ public class MainDAO {
 			}
 			for (Free free : list) {
 				
-				result += free.getState()+"\t"+free.getTitle()+"\t"+free.getWriter()+"\n";
+				result += free.getState()+"\t"+free.getTitle()+"\t"+free.getWriter()+"<br>";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,33 +133,67 @@ public class MainDAO {
 		return result;
 	}
 	
+//		public String mainPB() {
+//			MainDAO dao = new MainDAO();
+//		try {
+//			Document doc =  Jsoup.connect("http://www.wemakeprice.com/?utm_source=google&utm_medium=cpc&utm_term=%2E%EC%9C%84%EB%A9%94%ED%94%84&utm_content=wemake&utm_campaign=r_sa&gclid=Cj0KCQjw_o7NBRDgARIsAKvAgt0XToSAkzonC3HrDCZiNipsYwyB3uK9e-y9rti2wIixsINM3KqpPKUaAnMzEALw_wcB").get();
+//			Elements elements = doc.select(".box_thumb img");
+//			List<String> PBlist = new ArrayList<>();
+//			for(int i=1;i<5;i++) {
+//				Element img = elements.get(i);
+//				String src = img.toString();
+//				int j = src.indexOf("http");
+//				int k = src.indexOf("\" alt");
+//				System.out.println(src.substring(j, k));
+//				String imgsrc = src.substring(j, k);
+//				String imgsrc1 = "<img src='"+imgsrc+"'/>";
+//				
+//				PBlist.add(imgsrc1);
+//			}
+//			for(String PBresult : PBlist) {
+//				PBresult += PBresult;
+//				return PBresult;
+//			}
+//			
+//			
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 	
 	public String mainPB() {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
 		String result = "";
-
+		
 		try {
+			Random r = new Random();
+			int i = r.nextInt(100)+1;
 			con = ConnectionPool.getConnection();
-
 			StringBuffer sql = new StringBuffer();
-			sql.append("select photo from t97_PB ");
+			sql.append("select b.* from ( ");
+			sql.append("select rownum rnum, a.* from ( ");
+			sql.append("select imageurl from t97_sale  ");
+			sql.append(" order by price desc ) a ) b ");
+			sql.append("where rnum between 100 and 104 ");
 			// 랜덤선택 구문 추가 필요
-			
+			System.out.println("i:"+i);
 			stmt = con.prepareStatement(sql.toString());
 
 			ResultSet rs = stmt.executeQuery();
+			System.out.println(rs.next());
 			List<PB> list = new ArrayList<>();
 			while (rs.next()) {
-
 				PB pb = new PB();
-				pb.setImageURL(rs.getString("photo"));
+				pb.setImageURL(rs.getString("imageurl"));
+				System.out.println(rs.getString("imageurl"));
 				list.add(pb);
-
 			}
 			for (PB pb : list) {
-				result += pb.getImageURL()+"\n";
+				result += "<img src=\""+pb.getImageURL()+"\"  class=\"w3-half\" />";
+				System.out.println(result);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -175,40 +203,40 @@ public class MainDAO {
 		return result;
 	}
 	
-	public String mainSale() {
-		
-		Connection con = null;
-		PreparedStatement stmt = null;
-		String result = "";
-		
-		try {
-			con = ConnectionPool.getConnection();
-			
-			StringBuffer sql = new StringBuffer();
-			sql.append("select photo from t97_sale ");
-			// 랜덤선택 구문 추가 필요
-			
-			stmt = con.prepareStatement(sql.toString());
-			
-			ResultSet rs = stmt.executeQuery();
-			List<Sale> list = new ArrayList<>();
-			while (rs.next()) {
-				
-				Sale sale = new Sale();
-				sale.setImageURL(rs.getString("photo"));
-				list.add(sale);
-				
-			}
-			for (Sale sale : list) {
-				result += sale.getImageURL()+"\n";
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			ConnectionPool.releaseConnection(con);
-		}
-		return result;
-	}
+//	public String mainSale() {
+//		
+//		Connection con = null;
+//		PreparedStatement stmt = null;
+//		String result = "";
+//		
+//		try {
+//			con = ConnectionPool.getConnection();
+//			
+//			StringBuffer sql = new StringBuffer();
+//			sql.append("select photo from t97_sale ");
+//			// 랜덤선택 구문 추가 필요
+//			
+//			stmt = con.prepareStatement(sql.toString());
+//			
+//			ResultSet rs = stmt.executeQuery();
+//			List<Sale> list = new ArrayList<>();
+//			while (rs.next()) {
+//				
+//				Sale sale = new Sale();
+//				sale.setImageURL(rs.getString("photo"));
+//				list.add(sale);
+//				
+//			}
+//			for (Sale sale : list) {
+//				result += sale.getImageURL()+"<br>";
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			ConnectionPool.releaseConnection(con);
+//		}
+//		return result;
+//	}
 
 	public String mainWorld() {
 
@@ -235,7 +263,7 @@ public class MainDAO {
 
 			}
 			for (World world : list) {
-				result += world.getPhoto()+"\n";
+				result += world.getPhoto()+"<br>";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -246,59 +274,40 @@ public class MainDAO {
 	}
 	
 
-	public void search() {
+	public String reviewSearch(String keyword) {
 		
 		Connection con = null;
 		PreparedStatement stmt = null;
-		System.out.println("리뷰게시판에 검색할 내용 입력 : ");
-		Scanner sc = new Scanner(System.in);
+		String reviewSearch = "";
 		
-		String find = sc.nextLine();
 		try {
 			con = ConnectionPool.getConnection();
 			//review게시판의 content, title, writer에서 일치하는 부분이 있는지 검색
-			String [] table = {"t97_review", "t97_free"};
-			for(int i =0;i<2;i++) {
-			StringBuffer sql = new StringBuffer();
-			sql.append("select * from "+table[i]+" ");
-			sql.append("where content like '%"+find+"%'  ");
-			sql.append("or title like '%"+find+"%'  ");
-			sql.append("or writer like '%"+find+"%'  ");
-			stmt = con.prepareStatement(sql.toString());
-			
-			ResultSet rs = stmt.executeQuery();
-			List<Recipe> list = new ArrayList<>();
-			while (rs.next()) {
+				StringBuffer sql = new StringBuffer();
+				sql.append("select * from t97_review ");
+				sql.append("where content like '%"+keyword+"%'  ");
+				sql.append("or title like '%"+keyword+"%'  ");
+				sql.append("or writer like '%"+keyword+"%'  ");
+				stmt = con.prepareStatement(sql.toString());
 				
-				Recipe r = new Recipe();
-				r.setNo(rs.getInt("no"));
-				list.add(r);
-				
-			}
-			System.out.println("\n"); //구분용
-			for (Recipe recipe : list) {
-				System.out.println(recipe.getNo());
-			}
-			}
+				ResultSet rs = stmt.executeQuery();
+				List<Review> reviewList = new ArrayList<>();
+				while (rs.next()) {
+					
+					Review r = new Review();
+					r.setNo(rs.getInt("no"));
+					reviewList.add(r);
+					
+				}
+				for (Review review : reviewList) {
+					reviewSearch += review.getNo()+"<br>";
+				}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.releaseConnection(con);
 		}
+		return reviewSearch;
 	}
 }
-
-
-class Service{
-	void service(){
-		MainDAO dao = new MainDAO();
-		dao.mainFree();
-		dao.mainPB();
-		dao.mainRecipe();
-		dao.mainReview();
-		dao.mainSale();
-		dao.mainWorld();
-		dao.search();
-	}
 	
-}

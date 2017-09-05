@@ -9,7 +9,6 @@ import com.conv.member.domain.Member;
 import com.conv.util.ConnectionPool;
 
 public class LogInDAO {
-	
 	public Member login(Member member) {
 		// 반환받은 정보와 DB가 일치하는지 확인하여 회원정보 반환
 		Connection con = null;
@@ -62,4 +61,37 @@ public class LogInDAO {
         System.out.println(a);
         sc.close();
 	}
+
+public static boolean check(String id ) {
+	Connection con = null;
+	PreparedStatement pstmt = null;
+
+	try {
+		con = ConnectionPool.getConnection();
+
+		StringBuffer sql = new StringBuffer();
+		sql.append("select id from t97_member ");
+		
+		
+		pstmt = con.prepareStatement(sql.toString());
+
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			if(rs.getString("id").equals(id)){
+				return true;
+			}
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		ConnectionPool.releaseConnection(con);
+	}
+	return false;
+
+	
+}
+
+
 }

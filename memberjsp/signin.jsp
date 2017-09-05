@@ -7,10 +7,25 @@
 <html>
 <head>
     <title>회원가입 화면</title>
- 
- 
+ <style type="text/css">
+        table{
+            margin-left:auto; 
+            margin-right:auto;
+            border:3px solid skyblue;
+        }
+        
+        td{
+            border:1px solid skyblue
+        }
+        
+        #title{
+            background-color:skyblue
+        }
+   </style>
+
     <script type="text/javascript">
     
+            <%--
         // 다 입력 했는지 확인하기
         function checkValue()
         {
@@ -20,12 +35,10 @@
                 alert("아이디를 입력하세요.");
                 return false;
             }
-            <%--
             if(form.idDuplication.value != "idCheck"){
                 alert("아이디 중복체크를 해주세요.");
                 return false;
             }
-            --%>
             if(!form.password.value){
                 alert("비밀번호를 입력하세요.");
                 return false;
@@ -45,6 +58,16 @@
                 return false;
             }
         }
+        //중복체크
+        function openDubCheck(){
+        	window.name = "parentForm";
+        	window.open("/conv/jsp/member/iddubcheck.jsp", "idCheck", "width=500, height=300, scrollbars=no")
+        	
+        }
+        
+        }
+        
+            --%>
         
         // 취소 버튼 클릭시 메인으로 이동
         function goFirstForm() {
@@ -54,63 +77,40 @@
    </script>
     
 </head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
 <body>
-        <br><br>
-        <b><font size="6" color="gray">회원가입</font></b>
-        <br><br><br>
+<header class="w3-container w3-theme w3-padding" id="myHeader">
+  
+  <div class="w3-center">
+  <h1 class="w3-xxxlarge w3-animate-bottom">회원가입</h1>
+  </div>
+  
+</header>
+	<form method="post" action="/conv/member/login" method="post">
+	<div align="center" class="w3-third">
+
         
-        <form method="post" action="/conv/jsp/member/signin">
+        <form method="post" name= "userInfo" action="/conv/jsp/member/signin" >
             <table>
                 <tr>
                     <td id="title">아이디</td>
                     <td>
-                        <input type="text" name="id" maxlength="50">
+                        <input type="text" name="id" maxlength="50" value="${userId}">${idDup}
                         <%--
-                        <input type="button" value="중복확인" onclick="   ">    
+                        <input type="button" value="중복확인" onclick="openDubCheck()">    
                         <input type="hidden" name="idDuplication" value="idUncheck" >
                          --%>
                     </td>
                 </tr>
                         
-                <tr>
-                    <td id="title">비밀번호</td>
-                    <td>
-                        <input type="password" name="pass" maxlength="50">
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td id="title">비밀번호 재입력</td>
-                    <td>
-                        <input type="password" name="passwordcheck" maxlength="50">
-                    </td>
-                </tr>
-                <tr>
-                    <td id="title">비밀번호 힌트</td>
-                    <td>
-                        <input type="password" name="passhint" maxlength="50">
-                    </td>
-                </tr>
-                    
-                <tr>
-                    <td id="title">이메일</td>
-                    <td>
-                        <input type="text" name="emailAddr" maxlength="50">
-                        <%--
-                        @
-                        <select name="mail2">
-                            <option>naver.com</option>
-                            <option>daum.net</option>
-                            <option>gmail.com</option>
-                            <option>nate.com</option>     
-                        </select>
-                         --%>
-                    </td>
-                </tr>
             </table>
             <br>
-            <input type="submit" value="가입"/>  
-            <input type="button" value="취소" onclick="goFirstForm()">
+            <input type="submit" value="중복체크"/>  
+            <input type="button" value="취소" onclick="goFirstForm()" />
         </form>
 </body>
 </html>
