@@ -124,7 +124,7 @@ public class SearchDAO {
 			StringBuffer sql = new StringBuffer();
 			sql.append("select no, title from t97_world ");
 			sql.append("where title like '%" + keyword + "%'  ");
-			sql.append("where content like '%" + keyword + "%'  ");
+			sql.append("or content like '%" + keyword + "%'  ");
 			stmt = con.prepareStatement(sql.toString());
 			
 			ResultSet rs = stmt.executeQuery();
