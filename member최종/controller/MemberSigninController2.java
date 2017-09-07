@@ -21,13 +21,14 @@ public class MemberSigninController2 extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		member.setId(request.getParameter("id"));
+		HttpSession session = request.getSession();
+		member.setId(session.getAttribute("userId"));
 		member.setPass(request.getParameter("pass"));
 		member.setPasshint(request.getParameter("passhint"));
-		member.setEmail(request.getParameter("emailAddr"));
+		member.setEmail(request.getParameter("email"));
 		dao.signIn(member);
 
-		HttpSession session = request.getSession();
+		
 		System.out.println("signined");
 
 		session.setAttribute("welcome", "가입을 환영합니다. 로그인해주세요.");

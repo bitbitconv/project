@@ -16,8 +16,8 @@ public class MainController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		session.setAttribute("idDup", "");
-		session.setAttribute("userId", "");
+//		session.setAttribute("idDup", "");
+//		session.setAttribute("userId", "");
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/main/main.jsp");
 		rd.forward(request, response);

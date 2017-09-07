@@ -24,13 +24,13 @@ public class MemberSigninController extends HttpServlet{
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		member.setId(request.getParameter("id"));
-		dao.signIn(member);
+//		dao.signIn(member);
 		
-		Member m = new Member();
+//		Member m = new Member();
 		Connection con = null;
 		PreparedStatement stmt = null;
 		HttpSession session = request.getSession();
-		session.setAttribute("userId", "");
+//		session.setAttribute("userId", "");
 
 		try {
 			System.out.println("dubchecked");
@@ -47,11 +47,11 @@ public class MemberSigninController extends HttpServlet{
 			int cnt = stmt.executeUpdate();
 			
 			if(cnt==1) {
-				m.setId(null);
-				session.setAttribute("idDup", member.getId()+"는 중복된 아이디입니다.");
+				member.setId(null);
+				session.setAttribute("idDup", request.getParameter("id")+"는 중복된 아이디입니다.");
 				response.sendRedirect("/conv/jsp/member/signin.jsp");
 			}else {
-				session.setAttribute("idDup","사용가능한 아이디입니다..");
+				session.setAttribute("idDup","사용가능한 아이디입니다.");
 				session.setAttribute("userId", member.getId());
 				response.sendRedirect("/conv/jsp/member/signin2.jsp");
 			}

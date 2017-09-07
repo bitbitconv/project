@@ -111,14 +111,14 @@
                 <tr>
                     <td id="title">비밀번호 힌트</td>
                     <td>
-                        <input type="password" name="passhint" maxlength="50">
+                        <input type="text" name="passhint" maxlength="50">
                     </td>
                 </tr>
                     
                 <tr>
                     <td id="title">이메일</td>
                     <td>
-                        <input type="text" name="emailAddr" maxlength="50">
+                        <input type="text" name="email" maxlength="50">
                         <%--
                         @
                         <select name="mail2">
