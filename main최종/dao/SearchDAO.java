@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.conv.free.domain.Free;
+import com.conv.recipe.domain.Recipe;
 import com.conv.review.domain.Review;
 import com.conv.util.ConnectionPool;
+import com.conv.world.domain.World;
 
 public class SearchDAO {
 	public List<Review> reviewSearch(String keyword) {
@@ -71,6 +73,69 @@ public class SearchDAO {
 				f.setRegDate(rs.getDate("reg_Date"));
 				freeSearch.add(f);
 				return freeSearch;
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.releaseConnection(con);
+		}
+		return null;
+	}
+	
+	public List<Recipe> recipeSearch(String keyword) {
+		
+		Connection con = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			con = ConnectionPool.getConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select no, title from t97_recipe ");
+			sql.append("where title like '%" + keyword + "%'  ");
+			stmt = con.prepareStatement(sql.toString());
+			
+			ResultSet rs = stmt.executeQuery();
+			List<Recipe> recipeSearch = new ArrayList<>();
+			while (rs.next()) {
+				
+				Recipe re = new Recipe();
+				re.setNo(rs.getInt("no"));
+				re.setTitle(rs.getString("title"));
+				recipeSearch.add(re);
+				return recipeSearch;
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.releaseConnection(con);
+		}
+		return null;
+	}
+	
+	public List<World> worldSearch(String keyword) {
+		
+		Connection con = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			con = ConnectionPool.getConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select no, title from t97_world ");
+			sql.append("where title like '%" + keyword + "%'  ");
+			sql.append("where content like '%" + keyword + "%'  ");
+			stmt = con.prepareStatement(sql.toString());
+			
+			ResultSet rs = stmt.executeQuery();
+			List<World> worldSearch = new ArrayList<>();
+			while (rs.next()) {
+				
+				World w = new World();
+				w.setNo(rs.getInt("no"));
+				w.setTitle(rs.getString("title"));
+				worldSearch.add(w);
+				return worldSearch;
 				
 			}
 		} catch (Exception e) {
