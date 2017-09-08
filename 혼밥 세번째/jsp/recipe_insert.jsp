@@ -176,285 +176,87 @@
 		</div>
 	</div>
 
-
-<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 여기까지 복붙~~~ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-
-
-
-
-
-
-	<!-- 메인페이지 -->
-
-	<div class="w3-row-padding w3-center w3-margin-top"
-		style="background: white;">
-		<div class="w3-half">
-			<div class="w3-card-2 w3-container" style="min-height: 460px">
-
-				<h3><a href="/conv/com/conv/recipe/controller/recipelistcontroller"  style="text-decoration:none;">혼밥 레시피!</h3>
-				<br>
-				<%
-					List<Recipe> recipeList = dao.mainRecipe();
-					for (Recipe recipe : recipeList) {
-						int no = recipe.getNo();
-						String title = recipe.getTitle();
-						String photo = recipe.getPhoto();
-				%>
-				<figure class="snip1132">
-					<img src="${pageContext.request.contextPath}/upload<%=photo%>"
-						height="200px" width="310px"/>
-					<figcaption>
-						<div class="heading">
-							<h3>혼밥 <span>레시피</span></h3>
-						</div>
-						<div class="caption">
-							<p><%=title%></p>
-						</div>
-					</figcaption>
-					<a href="/conv/com/conv/recipe/controller/recipelistcontroller"></a>
-				</figure>
-				<%
-					}
-				%>
+	
+	<!-- Modal2 -->
+	<div id="id02" class="w3-modal">
+		<div class="w3-modal-content w3-card-4 w3-animate-top">
+			<header class="w3-container w3-theme-l1">
+				<span onclick="document.getElementById('id02').style.display='none'"
+					class="w3-button w3-display-topright">X</span>
+			</header>
+			<div class="w3-padding">
+				<h5>
+					내용첨부 부탁드려요!<i class="fa fa-smile-o"></i>
+				</h5>
 			</div>
 		</div>
-
-
-		<div class="w3-half">
-			<div class="w3-card-2 w3-container" style="min-height: 460px">
-				<h3><a href="/conv/com/conv/world/controller/worldlistcontroller" 
-				style="text-decoration:none;">세계의 편의점</a></h3>
-				<br>
-				<div class="w3-responsive w3-card-4">
-					<table class="w3-table w3-striped w3-bordered">
-
-						<%
-							List<World> worldList = dao.mainWorld();
-							for (World world : worldList) {
-								String title = world.getTitle();
-								String photo = world.getPhoto();
-						%>
-			<figure class="snip1132">
-					<img src="${pageContext.request.contextPath}/<%=photo%> " height="200px"
-							width="200px" />
-					<figcaption>
-						<div class="heading">
-							<h3>세계의<span>편의점</span></h3>
-						</div>
-						<div class="caption">
-							<p><%=title%></p>
-						</div>
-					</figcaption>
-					<a href="/conv/com/conv/world/controller/worldlistcontroller"></a>
-				</figure>
-						<%
-							}
-						%>
-
-					</table>
-				</div>
-			</div>
-		</div>
-
-
-
-		<div class="w3-half">
-			<div class="w3-card-2 w3-container" style="min-height: 460px">
-				<h3>
-					<a href="/conv/review/list" style="text-decoration:none;">리뷰 게시판</a>
-				</h3>
-				<form action = "/conv/review/post">
-				<br>
-
-				<div class="w3-responsive w3-card-4">
-					<table class="w3-table w3-striped w3-bordered">
-						<thead>
-							<tr class="w3-theme">
-								<th>번호</th>
-								<th>제목</th>
-								<th>작성자</th>
-								<th>조회수</th>
-								<th>등록일</th>
-							</tr>
-						</thead>
-						<tbody>
-							<%
-								List<Review> list = dao.mainReview();
-								for (Review review : list) {
-									int no = review.getNo();
-									String title = review.getTitle();
-									String writer = review.getWriter();
-									int hit = review.getHit();
-									Date regDate = review.getRegDate();
-							%>
-
-							<tr class="w3-white">
-								<td><%=no%></td>
-								<td><button class="w3-bar-item w3-button" name="no"
-										value="<%=no%>"><%=title%></button></td>
-								<td><%=writer%></td>
-								<td><%=hit%></td>
-								<td><%=regDate%></td>
-							</tr>
-							<%
-								}
-							%>
-							</form>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-
-
-
-
-		<div class="w3-half">
-			<div class="w3-card-2 w3-container" style="min-height: 460px">
-				<h3>
-					<a href="/conv/free/list" style="text-decoration:none;">나눔 게시판</a>
-				</h3>
-				<form action = "/conv/free/post">
-				<br>
-
-				<div class="w3-responsive w3-card-4">
-					<table class="w3-table w3-striped w3-bordered">
-						<thead>
-							<tr class="w3-theme">
-								<th>번호</th>
-								<th>상태</th>
-								<th>제목</th>
-								<th>작성자</th>
-								<th>등록일</th>
-							</tr>
-						</thead>
-						<tbody>
-							<%
-								List<Free> freeList = dao.mainFree();
-								for (Free free : freeList) {
-									int no = free.getNo();
-									String state = free.getState();
-									String title = free.getTitle();
-									String writer = free.getWriter();
-									Date regDate = free.getRegDate();
-							%>
-
-							<tr class="w3-white">
-								<td><%=no%></td>
-								<td><%=state%></td>
-								<td><button class="w3-bar-item w3-button" name="no"
-										value="<%=no%>"><%=title%></button></td>
-								<td><%=writer%></td>
-								<td><%=regDate%></td>
-							</tr>
-							<%
-								}
-							%>
-							</form>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="w3-half">
-			<div class="w3-card-2 w3-container" style="min-height: 460px">
-				<h3><a href="/conv/pb/list"  style="text-decoration:none;">PB 상품</a></h3>
-				<br>
-				<div class="w3-card-4">
-					<%
-						List<PB> PBList = dao.mainPB();
-						for (PB pb : PBList) {
-							String productname = pb.getProductName();
-							String imageURL = pb.getImageURL();
-							String price = pb.getPrice();
-							String convname = pb.getConvName();
-					%>
-					<figure class="snip1273">
-						<img src="<%=imageURL%>" height="200px" width="200px"
-							alt="sample72" />
-						<figcaption>
-							<h3><%=productname%></h3>
-							<p>
-								[<%=convname%>] &nbsp;
-								<%=price%></p>
-						</figcaption>
-						<a href="/conv/pb/list"></a>
-					</figure>
-					<%
-						}
-					%>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="w3-half">
-			<div class="w3-card-2 w3-container">
-				<h3><a href="/conv/sale/list"  style="text-decoration:none;">이달의 행사</a></h3>
-				<br>
-				<div class="w3-card-4">
-					<%
-						List<Sale> saleList = dao.mainSale();
-						for (Sale sale : saleList) {
-							String productname = sale.getProductName();
-							String imageURL = sale.getImageURL();
-							String price = sale.getPrice();
-							String event = sale.getEvent();
-					%>
-					<figure class="snip1273">
-						<img src="<%=imageURL%>" height="200px" width="200px"
-							alt="sample72" />
-						<figcaption>
-							<h3><%=productname%></h3>
-							<p>
-								[<%=event%>] &nbsp;
-								<%=price%></p>
-						</figcaption>
-						<a href="/conv/sale/list"></a>
-					</figure>
-					<%
-						}
-					%>
-				</div>
-			</div>
-		</div>
-
 	</div>
+	
+<div class="w3-container">
+  <hr>
+  <div class="w3-center">
+    <h2>혼밥 게시판</h2>
+    <p w3-class="w3-large">맛있는 정보를 등록해주세요!</p>
+  </div>
+<p>
+	<form action ="${pageContext.request.contextPath}/com/conv/recipe/controller/recipeinsertcontroller" method ="post"
+		enctype ="multipart/form-data">	
+    <label>제목</label>
+    </div>
+    <input class="w3-input" name="title" type="text" required>
+  <div class="w3-section">        
+    <label>내용</label>    
+        <textarea class="w3-input" name="content"></textarea>
+		<script type="text/javascript" src="ckeditor/ckeditor.js" ></script>		 
+		<script type="text/javascript">
+		 window.onload=function() {
+		  CKEDITOR.replace('content');
+		  window.onload = function() {
+				CKEDITOR.replace('content');
+				$("form").submit( function(e) {
+		            var messageLength = CKEDITOR.instances['content'].getData().replace(/<[^>]*>/gi,'').length;
+		            if(!messageLength) {
+		                e.preventDefault();
+		            }
+		        });
+			}
+		 }
+		</script>
+    </div>
+		첨부파일1 : <input class ="w3-img" type="file" name="photo" required><br>
+  <div class="w3-center">
+<button type="submit" class="w3-btn w3-xlarge w3-blue w3-hover-white w3-img" onclick="document.getElementById('id02').style.display='block'" style="font-weight:000;">등록</button>
+</div>
+</form>
+  
 
-	<div class="w3-container">
-		<hr>
-		</div>
+  <!-- Pagination -->
+  <div class="w3-center w3-padding-32">
+    <div class="w3-bar">
+    </div>
+  </div>
+</div>
+<br>
 
 	<!-- Footer -->
 	<footer class="w3-container w3-theme-dark w3-padding-16">
-		<h3>Footer</h3>
+		<h3>BBIK</h3>
 		<p>
-			Powered by <a href="https://www.w3schools.com/w3css/default.asp"
-				target="_blank">w3.css</a>
+			Made by <a href="/conv/jsp/common/us.jsp"
+				class="w3-btn w3-theme-light" target="_blank">삑을 만든 사람들</a>
 		</p>
 		<div style="position: relative; bottom: 55px;"
 			class="w3-tooltip w3-right">
-			<span class="w3-text w3-theme-light w3-padding">Go To Top</span>  <a
+			<span class="w3-text w3-theme-light w3-padding">위로 가기</span>  <a
 				class="w3-text-white" href="#myHeader"><span class="w3-xlarge">
 					<i class="fa fa-chevron-circle-up"></i>
 			</span></a>
 		</div>
-		<p>
-			Remember to check out our  <a href="w3css_references.asp"
-				class="w3-btn w3-theme-light" target="_blank">W3.CSS Reference</a>
-		</p>
+		<p>문의 : sangjoons@bbik.com</p>
 	</footer>
 
 	<!-- Script for Sidebar, Tabs, Accordions, Progress bars and slideshows -->
 	<script>
-		// 이미지 호버 : pb, sale
-
-		$(".hover").mouseleave(function() {
-			$(this).removeClass("hover");
-		});
-
 		// Side navigation
 		function w3_open() {
 			var x = document.getElementById("mySidebar");
